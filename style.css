@@ -1,0 +1,11 @@
+body.readministrator.options-general-php #wpbody-content,
+body.readministrator.options-writing-php #wpbody-content,
+body.readministrator.options-reading-php #wpbody-content,
+body.readministrator.options-discussion-php #wpbody-content,
+body.readministrator.options-media-php #wpbody-content,
+body.readministrator.options-permalink-php #wpbody-content,
+body.readministrator.privacy-php #wpbody-content {
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: grayscale(70%);
+}
