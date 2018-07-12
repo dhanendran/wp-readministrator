@@ -4,7 +4,10 @@ body.readministrator.options-reading-php #wpbody-content,
 body.readministrator.options-discussion-php #wpbody-content,
 body.readministrator.options-media-php #wpbody-content,
 body.readministrator.options-permalink-php #wpbody-content,
-body.readministrator.privacy-php #wpbody-content {
+body.readministrator.privacy-php #wpbody-content,
+body.readministrator.tools-php #wpbody-content,
+body.readministrator.tools_page_export_personal_data #wpbody-content,
+body.readministrator.tools_page_remove_personal_data #wpbody-content {
     cursor: not-allowed;
     pointer-events: none;
     filter: grayscale(70%);

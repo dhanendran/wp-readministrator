@@ -35,6 +35,17 @@ function wpreadmin_remove_role() {
 register_deactivation_hook( __FILE__, 'wpreadmin_remove_role' );
 
 /**
+ * Defining a constant to determine wp-readministrator.
+ */
+function wpreadmin_define_constant() {
+	$user = wp_get_current_user();
+	if ( in_array( 'readministrator', (array) $user->roles ) && ! defined( 'WP_READMIN' ) ) {
+		define( 'WP_READMIN', true );
+	}
+}
+add_action( 'init', 'wpreadmin_define_constant', 1 );
+
+/**
  * Adding style sheet.
  */
 function wpreadmin_add_style() {
@@ -50,8 +61,7 @@ add_action( 'init', 'wpreadmin_add_style' );
  * @return String
  */
 function wpreadmin_add_class( $classes ) {
-	$user = wp_get_current_user();
-	if ( in_array( 'readministrator', (array) $user->roles ) ) {
+	if ( defined( 'WP_READMIN' ) && WP_READMIN ) {
 		$classes .= ' readministrator ';
 	}
 
@@ -60,25 +70,67 @@ function wpreadmin_add_class( $classes ) {
 add_filter( 'admin_body_class', 'wpreadmin_add_class', 10, 1 );
 
 /**
- * @param $a
+ * Check for secured pages.
+ *
+ * @return bool
  */
-function wpreadmin_disable_editing( $a ) {
+function wpreadmin_is_secured_page() {
 	global $pagenow;
 
 	$settings_page = array(
-		'options-general.php'   => 1,
-		'options-writing.php'   => 1,
-		'options-reading.php'   => 1,
-		'options-media.php'     => 1,
-		'options-permalink.php' => 1,
-		'privacy.php'           => 1,
+		'options.php'            => 1,
+		'options-general.php'    => 1,
+		'options-writing.php'    => 1,
+		'options-reading.php'    => 1,
+		'options-discussion.php' => 1,
+		'options-media.php'      => 1,
+		'options-permalink.php'  => 1,
+		'privacy.php'            => 1,
+		'tools.php'              => 1,
 	);
 
-//	echo "<pre>1"; print_r($pagenow);die;
-}
-add_action( 'admin_menu', 'wpreadmin_disable_editing' );
+	if ( isset( $settings_page[ $pagenow ] ) ) {
+		return true;
+	}
 
-add_action( 'init', function() {
-	global $user;
-//	echo "<pre>"; print_r(get_role('readministrator'));die;
-} );
+	return false;
+}
+/**
+ * Show notice on the admin settings page.
+ */
+function wpreadmin_show_notice() {
+	if ( wpreadmin_is_secured_page() ) {
+		printf(
+			'<div class="notice notice-error"><p>%s</p></div>',
+			'You can only able to see the settings and can\'t make any changes.'
+		);
+	}
+}
+add_action( 'admin_notices', 'wpreadmin_show_notice' );
+
+/**
+ * Prevent hacking.
+ *
+ * @param $value
+ * @param $option
+ * @param $old_value
+ *
+ * @return mixed
+ */
+function wpreadmin_preserve_update( $value, $option, $old_value ) {
+	if ( wpreadmin_is_secured_page() ) {
+		$errors = get_settings_errors();
+		foreach ( $errors as $error ) {
+			if ( 'wpreamin_save_error' === $error['code'] ) {
+				return $old_value;
+			}
+		}
+
+		add_settings_error('general', 'wpreamin_save_error', __('Cheatin&#8217; uh? You are not allowed to do that.'), 'error');
+		return $old_value;
+	}
+
+	return $value;
+}
+add_filter( 'pre_update_option', 'wpreadmin_preserve_update', 1, 3 );
+
