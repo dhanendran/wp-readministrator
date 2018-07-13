@@ -1,16 +1,19 @@
 <?php
 /**
-* @package wp-readministrator
-*/
-
-/**
+ * @author            Dhanendran (https://dhanendranrajagopal.me/)
+ * @link              https://dhanendranrajagopal.me/
+ * @since             1.0.0
+ * @package           wp-readministrator
+ *
+ * @wordpress-plugin
  * Plugin Name: Readministrator (Read Only Administrator)
- * Plugin URI: https://github.com/dhanendran/wp-readministrator
+ * Plugin URI:  https://github.com/dhanendran/wp-readministrator
  * Description: Allowing users to see the admin settings page. Just Seeing, No edit allowed :) These users will have all the privilege of editors along with that they will have the ability to see the admin settings.
- * Version: 0.0.1
- * Author: Dhanendran Rajagopal
- * Author URI: https://dhanendranrajagopal.me/
- * License: GPLv3 or later
+ * Version:     0.0.1
+ * Author:      Dhanendran
+ * Author URI:  https://dhanendranrajagopal.me/
+ * License:     GPLv3 or later
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: wpreadmin
  */
 
