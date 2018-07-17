@@ -1,6 +1,6 @@
 # Readministrator (Read Only Administrator)
 Contributors: dhanendran
-Tags: equipments, manager, assets, management
+Tags: read only, admin, administrator, options, settings
 Requires at least: 4.4
 Tested up to: 4.9
 Stable tag: 0.0.1
