@@ -9,7 +9,7 @@
  * Plugin Name: Readministrator (Read Only Administrator)
  * Plugin URI:  https://github.com/dhanendran/wp-readministrator
  * Description: Adds a "Read Only Administrator" role. These users can view the entire wp-admin like an administrator, but cannot change anything: settings, content, users, plugins, themes, menus and comments are all read-only.
- * Version:     0.1.0
+ * Version:     1.0.0
  * Author:      Dhanendran
  * Author URI:  https://dhanendranrajagopal.me/
  * License:     GPLv3 or later
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-define( 'WP_READMINISTRATOR_VERSION', '0.1.0' );
+define( 'WP_READMINISTRATOR_VERSION', '1.0.0' );
 define( 'WP_READMINISTRATOR_ROLE', 'readministrator' );
 
 /**
@@ -35,7 +35,7 @@ define( 'WP_READMINISTRATOR_ROLE', 'readministrator' );
  * write capabilities are denied at runtime, so if the plugin is deactivated the
  * role harmlessly falls back to a plain Editor instead of a stranded admin.
  *
- * @since 0.1.0
+ * @since 1.0.0
  */
 class WP_Readministrator {
 
@@ -139,7 +139,7 @@ class WP_Readministrator {
 	/**
 	 * Register all hooks.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 */
 	public function init() {
 		register_activation_hook( __FILE__, array( $this, 'ensure_role' ) );
@@ -171,7 +171,7 @@ class WP_Readministrator {
 	/**
 	 * Create / refresh the role with a safe Editor baseline.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 */
 	public function ensure_role() {
 		$editor = get_role( 'editor' );
@@ -188,7 +188,7 @@ class WP_Readministrator {
 	/**
 	 * Re-sync the role after a plugin update without requiring reactivation.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 */
 	public function maybe_sync_role() {
 		if ( get_option( 'wpreadmin_role_version' ) !== WP_READMINISTRATOR_VERSION ) {
@@ -213,7 +213,7 @@ class WP_Readministrator {
 	/**
 	 * Whether the given user is a Read Only Administrator.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_User|null $user User object.
 	 * @return bool
@@ -225,7 +225,7 @@ class WP_Readministrator {
 	/**
 	 * Whether the current user is a Read Only Administrator.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -236,7 +236,7 @@ class WP_Readministrator {
 	/**
 	 * Block the current request with a friendly read-only message.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 */
 	private function deny() {
 		wp_die(
@@ -256,7 +256,7 @@ class WP_Readministrator {
 	/**
 	 * Grant view capabilities and deny write capabilities at runtime.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param array        $allcaps All capabilities of the user.
 	 * @param array        $caps    Required primitive capabilities.
@@ -283,7 +283,7 @@ class WP_Readministrator {
 	/**
 	 * Deny per-object write meta capabilities.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param array  $caps    Required primitive capabilities.
 	 * @param string $cap     Meta capability being checked.
@@ -311,7 +311,7 @@ class WP_Readministrator {
 	/**
 	 * Whether an option is an internal/background option we must not block.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param string $option Option name.
 	 * @return bool
@@ -327,7 +327,7 @@ class WP_Readministrator {
 	/**
 	 * Block option writes (covers Settings API saves on any page).
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param mixed  $value     New value.
 	 * @param string $option    Option name.
@@ -345,7 +345,7 @@ class WP_Readministrator {
 	/**
 	 * Block network option writes.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param mixed  $value     New value.
 	 * @param string $option    Option name.
@@ -368,7 +368,7 @@ class WP_Readministrator {
 	 * Block all non-read REST requests (covers the block editor, modern
 	 * widgets/menus, and REST-based settings).
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 *
 	 * @param mixed           $result  Response to replace the dispatch with.
 	 * @param WP_REST_Server  $server  Server instance.
@@ -394,7 +394,7 @@ class WP_Readministrator {
 	/**
 	 * Block classic write actions on screens whose menu we keep visible.
 	 *
-	 * @since 0.1.0
+	 * @since 1.0.0
 	 */
 	public function guard_requests() {
 		if ( ! $this->current_is_readministrator() ) {

@@ -4,7 +4,7 @@ Tags: read only, admin, administrator, options, settings
 Requires at least: 4.7
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 0.1.0
+Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: <a href="http://www.gnu.org/licenses/gpl-3.0.html">http://www.gnu.org/licenses/gpl-3.0.html</a>
 
@@ -48,7 +48,7 @@ Enforcement covers core write paths plus the REST API. A small residual surface 
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0.0 =
 
 * [Feature] Read Only Administrators are now genuinely read-only across the whole admin, not just nine core settings pages. Writes are blocked at the capability layer (`user_has_cap` / `map_meta_cap`), with additional guards for option saves, the REST API, and classic write actions (plugins, themes, menus, widgets, comments).
 * [Improvement] The role now stores only a safe Editor baseline; the elevated "view everything" capabilities are granted at runtime, so deactivating the plugin downgrades the role to a plain Editor instead of leaving stranded permissions.
