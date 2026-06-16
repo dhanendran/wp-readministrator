@@ -9,7 +9,7 @@
  * Plugin Name: Readministrator (Read Only Administrator)
  * Plugin URI:  https://github.com/dhanendran/wp-readministrator
  * Description: Allowing users to see the admin settings page. Just Seeing, No edit allowed :) These users will have all the privilege of editors along with that they will have the ability to see the admin settings.
- * Version:     0.0.1
+ * Version:     0.0.2
  * Author:      Dhanendran
  * Author URI:  https://dhanendranrajagopal.me/
  * License:     GPLv3 or later
@@ -31,11 +31,14 @@ register_activation_hook( __FILE__, 'wpreadmin_add_role' );
 
 /**
  * Remove role `readministrator` on plugin uninstall.
+ *
+ * Registered as an uninstall (not deactivation) hook so that temporarily
+ * deactivating the plugin does not destroy the role and strip assigned users.
  */
 function wpreadmin_remove_role() {
 	remove_role( 'readministrator' );
 }
-register_deactivation_hook( __FILE__, 'wpreadmin_remove_role' );
+register_uninstall_hook( __FILE__, 'wpreadmin_remove_role' );
 
 /**
  * Defining a constant to determine wp-readministrator.
@@ -50,11 +53,15 @@ add_action( 'init', 'wpreadmin_define_constant', 1 );
 
 /**
  * Adding style sheet.
+ *
+ * Loaded in the admin only, and only for Read Only Administrator users.
  */
 function wpreadmin_add_style() {
-	wp_enqueue_style( 'wpreadmin-style',  plugin_dir_url( __FILE__ ) . '/style.css' );
+	if ( defined( 'WP_READMIN' ) && WP_READMIN ) {
+		wp_enqueue_style( 'wpreadmin-style', plugin_dir_url( __FILE__ ) . 'style.css', array(), '0.0.2' );
+	}
 }
-add_action( 'init', 'wpreadmin_add_style' );
+add_action( 'admin_enqueue_scripts', 'wpreadmin_add_style' );
 
 /**
  * Add CSS class `wp-readministrator` to body tag if user is Read Only Admin.
