@@ -2,7 +2,7 @@
 Contributors: dhanendran
 Tags: read only, admin, administrator, options, settings
 Requires at least: 4.4
-Tested up to: 5.6
+Tested up to: 7.0
 Stable tag: 0.0.2
 License: GPLv3 or later
 License URI: <a href="http://www.gnu.org/licenses/gpl-3.0.html">http://www.gnu.org/licenses/gpl-3.0.html</a>
