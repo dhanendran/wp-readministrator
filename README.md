@@ -8,6 +8,8 @@ Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: <a href="http://www.gnu.org/licenses/gpl-3.0.html">http://www.gnu.org/licenses/gpl-3.0.html</a>
 
+A read-only administrator role — users can view the entire wp-admin like an admin but cannot change anything.
+
 == Description ==
 Readministrator adds a "Read Only Administrator" role. Assign it to a user and they can browse the entire wp-admin like an administrator — Settings, Users, Plugins, Themes, content, comments and more — but they cannot change anything. Every write is blocked at the capability layer.
 
